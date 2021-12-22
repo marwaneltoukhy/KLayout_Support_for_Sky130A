@@ -217,8 +217,12 @@ connect(MET5_PIN, MET5_LABEL)
 
 # Global
 connect_global(SUB, "VNB")
-# connect_global(SUB, "VGND")
-same_nets("sky*", "VGND", "SKY*", "VNB")
+#connect_global(SUB, "VGND")
+connect_explicit("digital_pll", ["VGND", "VNB"])
+#schematic.connect_explicit("*", ["VGND", "VNB"])
+#connect_global(SUB, "VGND")
+blank_circuit("sky*")
+blank_circuit("SKY*")
 
 # Flatten cells which are present in one netlist only
 align
@@ -278,6 +282,8 @@ equivalent_pins("*XOR2_1", "A", "B")
 equivalent_pins("*XOR2_2", "A", "B")
 equivalent_pins("*XNOR2_1", "A", "B")
 equivalent_pins("*XNOR2_2", "A", "B")
+equivalent_pins("sky*", "VGND", "VNB")
+equivalent_pins("SKY*", "VGND", "VNB")
 
 if $black_box == 1 || $black_box == 'true'
     blank_circuit("sky*")

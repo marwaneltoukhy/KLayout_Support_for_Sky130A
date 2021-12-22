@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<klayout-macro>
+ <description/>
+ <version/>
+ <category>lvs</category>
+ <prolog/>
+ <epilog/>
+ <doc/>
+ <autorun>false</autorun>
+ <autorun-early>false</autorun-early>
+ <shortcut/>
+ <show-in-menu>true</show-in-menu>
+ <group-name>lvs_scripts</group-name>
+ <menu-path>tools_menu.lvs.end</menu-path>
+ <interpreter>dsl</interpreter>
+ <dsl-interpreter-name>lvs-dsl-xml</dsl-interpreter-name>
+ <text>
+# Extraction for SKY130
+#
+############################
+
+# optionnal for a batch launch :   klayout -b -rd input=my_layout.gds -rd report=my_report.lyrdb -rd schematic=reference_netlist.cir -rd target_netlist=extracted_netlist.cir -r sky130.lvs
+if $input
+  source($input, $top_cell)
+end
+
+if $report
+  report($report)
+else
+  report_lvs("lvs_report.lvsdb")
+end
+
+
+if $schematic
+#reference netlist
+  schematic($schematic)
+end
+
+# true: use net names instead of numbers
+# false: use numbers for nets
+spice_with_net_names = true
+
+# true: put in comments with details
+# false: no comments
+spice_with_comments = false
+
+
+
+#write_spice(spice_with_net_names, spice_with_comments)
+
+# Hierarchical mode
+#flat
+deep
+# Use 4 CPU cores
+threads(16)
+# Print details
+#verbose(true)
+
+
+# layers definitions
+########################
+BOUND  = input(235, 4)
+DNWELL  = input(64, 18)
+PWRES  = input(64, 13)
+NWELL  = input(64, 20)
+NWELL_LABEL  = input(64, 5)
+NWELL_PIN  = input(64, 16)
+PWELL_LABEL  = input(64, 59)
+PWELL_PIN  = input(122, 16)
+DIFF  = input(65, 20)
+TAP  = input(65, 44)
+PSDM  = input(94, 20)
+NSDM  = input(93, 44)
+LVTN  = input(125, 44)
+HVTR  = input(18, 20)
+HVTP  = input(78, 44)
+SONOS  = input(80, 20)
+COREID  = input(81, 2)
+STDCELL  = input(81, 4)
+NPNID  = input(82, 20)
+PNPID  = input(82, 44)
+RPM  = input(86, 20)
+URPM  = input(79, 20)
+LDNTM  = input(11, 44)
+HVNTM  = input(125, 20)
+POLY  = input(66, 20)
+POLY_LABEL  = input(66, 5)
+POLY_PIN  = input(66, 16)
+POLY_SHORT = input(66,15)
+HVI  = input(75, 20)
+LICON  = input(66, 44)
+NPC  = input(95, 20)
+DIFFRES  = input(65, 13)
+POLYRES  = input(66, 13)
+POLYSHO  = input(66, 15)
+DIODE  = input(81, 23)
+LI  = input(67, 20)
+LI_LABEL  = input(67, 5)
+LI_PIN  = input(67, 16)
+LIRES  = input(67, 13)
+MCON  = input(67, 44)
+MET1  = input(68, 20)
+MET1_LABEL  = labels(68, 5)
+MET1_PIN  = input(68, 16)
+MET1RES  = input(68, 13)
+VIA1  = input(68, 44)
+MET2  = input(69, 20)
+MET2_LABEL  = labels(69, 5)
+MET2_PIN  = input(69, 16)
+MET2RES  = input(69, 13)
+VIA2  = input(69, 44)
+MET3  = input(70, 20)
+MET3_LABEL  = labels(70, 5)
+MET3_PIN  = input(70, 16)
+MET3RES  = input(70, 13)
+VIA3  = input(70, 44)
+MET4  = input(71, 20)
+MET4_LABEL  = labels(71, 5)
+MET4_PIN  = input(71, 16)
+MET4RES  = input(71, 13)
+VIA4  = input(71, 44)
+MET5  = input(72, 20)
+MET5_LABEL  = labels(72, 5)
+MET5_PIN  = input(72, 16)
+MET5RES  = input(72, 13)
+RDL  = input(74, 20)
+RDLTXT  = input(74, 5)
+RDLPIN  = input(74, 16)
+GLASS  = input(76, 20)
+CAPM  = input(89, 44)
+CAPM2  = input(97, 44)
+LOWTAPD  = input(81, 14)
+FILLOBSM1  = input(62, 24)
+FILLOBSM2  = input(105, 52)
+FILLOBSM3  = input(107, 24)
+FILLOBSM4  = input(112, 4)
+NCM = input(92, 44)
+
+
+# Bulk layer for terminal provisioning
+SUB = input(236, 0)
+# SUB = polygon_layer
+
+POLY_SHORT_RES = POLY &amp; POLY_SHORT
+POLY = POLY - POLY_SHORT
+
+# Computed layers
+PDIFF = DIFF &amp; NWELL &amp; PSDM
+NTAP = TAP &amp; NWELL &amp; NSDM
+PGATE = PDIFF &amp; POLY
+PSD = PDIFF - PGATE
+STD_PGATE = PGATE - HVTP - NCM - HVI
+HVT_PGATE = PGATE &amp; HVTP - NCM - HVI
+HV5_PGATE = PGATE - HVTP - NCM &amp; HVI
+
+NDIFF = DIFF - NWELL &amp; NSDM
+PTAP = TAP - NWELL &amp; PSDM
+NGATE = NDIFF &amp; POLY
+NSD = NDIFF - NGATE
+STD_NGATE = NGATE - NCM - LVTN - HVI
+LVT_NGATE = NGATE - NCM &amp; LVTN - HVI
+HV5_NGATE = NGATE - NCM - LVTN &amp; HVI
+HV5NA_NGATE = NGATE - NCM &amp; LVTN &amp; HVI
+
+# drawing to physical
+device_scaling(1000000)
+
+# PMOS transistor device extraction
+extract_devices(mos4("sky130_fd_pr__pfet_01v8"), { "SD" =&gt; PSD, "G" =&gt; STD_PGATE, "tS" =&gt; PSD, "tD" =&gt; PSD, "tG" =&gt; POLY, "W" =&gt; NWELL })
+extract_devices(mos4("sky130_fd_pr__pfet_01v8_hvt"), { "SD" =&gt; PSD, "G" =&gt; HVT_PGATE, "tS" =&gt; PSD, "tD" =&gt; PSD, "tG" =&gt; POLY, "W" =&gt; NWELL })
+extract_devices(mos4("sky130_fd_pr__pfet_g5v0d10v5"), { "SD" =&gt; PSD, "G" =&gt; HV5_PGATE, "tS" =&gt; PSD, "tD" =&gt; PSD, "tG" =&gt; POLY, "W" =&gt; NWELL })
+
+#extract_devices(mos4("pfet_01v8"), { "SD" =&gt; PSD, "G" =&gt; STD_PGATE, "tS" =&gt; PSD, "tD" =&gt; PSD, "tG" =&gt; POLY, "W" =&gt; NWELL })
+#extract_devices(mos4("pfet_01v8_hvt"), { "SD" =&gt; PSD, "G" =&gt; HVT_PGATE, "tS" =&gt; PSD, "tD" =&gt; PSD, "tG" =&gt; POLY, "W" =&gt; NWELL })
+#extract_devices(mos4("pfet_g5v0d10v5"), { "SD" =&gt; PSD, "G" =&gt; HV5_PGATE, "tS" =&gt; PSD, "tD" =&gt; PSD, "tG" =&gt; POLY, "W" =&gt; NWELL })
+
+# NMOS transistor device extraction
+extract_devices(mos4("sky130_fd_pr__nfet_01v8"), { "SD" =&gt; NSD, "G" =&gt; STD_NGATE, "tS" =&gt; NSD, "tD" =&gt; NSD, "tG" =&gt; POLY, "W" =&gt; SUB })
+extract_devices(mos4("sky130_fd_pr__nfet_01v8_lvt"), { "SD" =&gt; NSD, "G" =&gt; LVT_NGATE, "tS" =&gt; NSD, "tD" =&gt; NSD, "tG" =&gt; POLY, "W" =&gt; SUB })
+extract_devices(mos4("sky130_fd_pr__nfet_g5v0d10v5"), { "SD" =&gt; NSD, "G" =&gt; HV5_NGATE, "tS" =&gt; NSD, "tD" =&gt; NSD, "tG" =&gt; POLY, "W" =&gt; SUB })
+extract_devices(mos4("sky130_fd_pr__nfet_01v8_nvt"), { "SD" =&gt; NSD, "G" =&gt; HV5NA_NGATE, "tS" =&gt; NSD, "tD" =&gt; NSD, "tG" =&gt; POLY, "W" =&gt; SUB })
+
+#extract_devices(mos4("nfet_01v8"), { "SD" =&gt; NSD, "G" =&gt; STD_NGATE, "tS" =&gt; NSD, "tD" =&gt; NSD, "tG" =&gt; POLY, "W" =&gt; SUB })
+#extract_devices(mos4("nfet_01v8_lvt"), { "SD" =&gt; NSD, "G" =&gt; LVT_NGATE, "tS" =&gt; NSD, "tD" =&gt; NSD, "tG" =&gt; POLY, "W" =&gt; SUB })
+#extract_devices(mos4("nfet_g5v0d10v5"), { "SD" =&gt; NSD, "G" =&gt; HV5_NGATE, "tS" =&gt; NSD, "tD" =&gt; NSD, "tG" =&gt; POLY, "W" =&gt; SUB })
+#extract_devices(mos4("nfet_01v8_nvt"), { "SD" =&gt; NSD, "G" =&gt; HV5NA_NGATE, "tS" =&gt; NSD, "tD" =&gt; NSD, "tG" =&gt; POLY, "W" =&gt; SUB })
+
+# Resistor device extraction
+sheet_rho=0
+#POLY_SHORT_RES = POLY &amp; POLY_SHORT
+#POLY_SHORT_T = POLY - POLY_SHORT_RES
+#POLY_TA = LI
+#POLY_TB = LI
+#POLY = POLY - POLY_SHORT
+
+SUB.output("This is the substrate")
+#POLY_SHORT_T.output("This is the poly short terminals")
+#POLY_TB.output("This is the poly short terminals")
+
+# tA, tB whether they are POLY, LI, MET1 shorting problem. If there are no terminals, the labels are not recognized.
+#extract_devices(resistor("sky130_fd_pr__res_generic_po", sheet_rho), { "R" =&gt; POLY_SHORT_RES, "C" =&gt; POLY, "tA" =&gt; POLY_TA, "tB" =&gt;POLY_TB})
+#extract_devices(resistor_with_bulk("sky130_fd_pr__res_generic_po", sheet_rho), { "R" =&gt; POLY, "C" =&gt; LI ,"tA" =&gt; MET1PIN, "tB" =&gt;LIPIN, "tW"=&gt; LI, "W"=&gt;LI })
+
+extract_devices(resistor("sky130_fd_pr__res_generic_po", sheet_rho), { "R" =&gt; POLY_SHORT_RES, "C" =&gt; POLY})
+
+# Diode device extraction
+
+MOS_DIFF = DIFF.overlapping(POLY)
+DIODE_DIFF = DIFF - MOS_DIFF
+
+extract_devices(diode("sky130_fd_pr__diode_pw2nd_05v5"), { "P" =&gt; DIODE_DIFF, "N" =&gt; NSD, "tA" =&gt; LI, "tC" =&gt; SUB })
+#extract_devices(diode("sky130_fd_pr__diode_pw2nd_05v5"), { "P" =&gt; DIFF, "N" =&gt; NSDM })
+
+
+# Define connectivity for netlist extraction
+
+
+# Inter-layer
+connect(SUB,  PTAP)
+connect(NWELL,  NTAP)
+connect(LICON,   PTAP)
+connect(LICON,   NTAP)
+connect(PSD,    LICON)
+connect(NSD,    LICON)
+connect(POLY,   LICON)
+connect(LICON,   LI)
+connect(LI, MCON)
+connect(MCON,   MET1)
+connect(MET1,VIA1)
+connect(VIA1,   MET2)
+connect(MET2, VIA2)
+connect(VIA2,   MET3)
+connect(MET3, VIA3)
+connect(VIA3,   MET4)
+connect(MET4, VIA4)
+connect(VIA4,   MET5)
+
+# Attaching labels
+connect(SUB, PWELL_PIN)
+connect(PWELL_PIN, PWELL_LABEL)
+connect(NWELL, NWELL_PIN)
+connect(NWELL_PIN, NWELL_LABEL)
+connect(POLY, POLY_PIN)
+connect(POLY_PIN, POLY_LABEL)
+#connect(POLY, POLY_SHORT_T)
+connect(LI, LI_PIN)
+connect(LI_PIN, LI_LABEL)
+connect(MET1, MET1_PIN)
+connect(MET1_PIN, MET1_LABEL)
+connect(MET2, MET2_PIN)
+connect(MET2_PIN, MET2_LABEL)
+connect(MET3, MET3_PIN)
+connect(MET3_PIN, MET3_LABEL)
+connect(MET4, MET4_PIN)
+connect(MET4_PIN, MET4_LABEL)
+connect(MET5, MET5_PIN)
+connect(MET5_PIN, MET5_LABEL)
+
+
+# Global
+connect_global(SUB, "VNB")
+#connect_global(SUB, "VGND")
+connect_explicit("digital_pll", ["VGND", "VNB"])
+#schematic.connect_explicit("*", ["VGND", "VNB"])
+#connect_global(SUB, "VGND")
+blank_circuit("sky*")
+blank_circuit("SKY*")
+
+
+# Actually performs the extraction
+#netlist # ... not really required
+
+# Flatten cells which are present in one netlist only
+
+align
+netlist.make_top_level_pins
+#netlist.simplify
+#schematic.simplify
+
+# SIMPLIFICATION of the netlist
+#netlist.combine_devices
+#netlist.purge
+#netlist.purge_nets
+#netlist.simplify
+#puts netlist.to_s
+#schematic.simplify
+
+# Tolerances for the devices extracted parameters
+#  tolerance(device_class_name, parameter_name [, :absolute =&amp;gt; absolute_tolerance] [, :relative =&amp;gt; relative_tolerance])
+tolerance("pfet_01v8", "W", :absolute =&gt; 1.nm, :relative =&gt; 0.001)
+tolerance("pfet_01v8", "L", :absolute =&gt; 1.nm, :relative =&gt; 0.001)
+tolerance("pfet_01v8_hvt", "W", :absolute =&gt; 1.nm, :relative =&gt; 0.001)
+tolerance("pfet_01v8_hvt", "L", :absolute =&gt; 1.nm, :relative =&gt; 0.001)
+tolerance("nfet_01v8", "W", :absolute =&gt; 1.nm, :relative =&gt; 0.001)
+tolerance("nfet_01v8", "L", :absolute =&gt; 1.nm, :relative =&gt; 0.001)
+tolerance("nfet_01v8_lvt", "W", :absolute =&gt; 1.nm, :relative =&gt; 0.001)
+tolerance("nfet_01v8_lvt", "L", :absolute =&gt; 1.nm, :relative =&gt; 0.001)
+
+# NangateOpenCellLibrary Digital gates input equivalence :
+#max_res(1000000)
+#min_caps(1e-15)
+
+
+
+if $target_netlist
+  target_netlist($target_netlist)
+else
+   # target_netlist("netlist.cir", write_spice(spice_with_net_names, spice_with_comments), "The netlist comment goes here.")
+   target_netlist(File.join(File.dirname(RBA::CellView::active.filename), source.cell_name+"_extracted.spice"),write_spice(spice_with_net_names, spice_with_comments),"Extracted by KLayout on : #{Time.now.strftime("%d/%m/%Y %H:%M")}")
+end
+
+
+#compare
+if ! compare
+  #raise "ERROR : Netlists don't match"
+  puts "ERROR : Netlists don't match"
+else
+  puts "INFO : Congratulations! Netlists match."
+end
+</text>
+</klayout-macro>

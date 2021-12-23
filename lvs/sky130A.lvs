@@ -44,8 +44,7 @@ else
 end
 
 # Print details
-verbose(true)
-
+# verbose(true)
 # layers definitions
 ########################
 BOUND  = input(235, 4)
@@ -218,11 +217,9 @@ connect(MET5_PIN, MET5_LABEL)
 # Global
 connect_global(SUB, "VNB")
 #connect_global(SUB, "VGND")
-connect_explicit("digital_pll", ["VGND", "VNB"])
-#schematic.connect_explicit("*", ["VGND", "VNB"])
+connect_explicit($top_cell, ["VGND", "VNB"])
 #connect_global(SUB, "VGND")
-blank_circuit("sky*")
-blank_circuit("SKY*")
+# same_device_classes("sky130_fd_sc_hd__fill_2", "nill")
 
 # Flatten cells which are present in one netlist only
 align
@@ -295,5 +292,5 @@ if ! compare
     #raise "ERROR : Netlists don't match"
     puts "ERROR : Netlists don't match"
   else
-    puts "INFO : Congratulations! Netlists match."
+    puts "INFO : Netlists match :D"
   end

@@ -1,0 +1,14 @@
+*
+*  /home/marwan/ef/klayout_lvs/lvs/test_cases/mgmt_protect_hv/mgmt_protect_hv.spice : SPICE netlist translated from the VERILOG netlist : /home/marwan/ef/caravel/verilog/gl/mgmt_protect_hv.v
+*                                                                                     on the 2021-12-22 17:57:02.123644
+*
+************************************************************************************************************************************************************************************************
+
+.INCLUDE sky130_fd_sc_hd.spice 
+
+.GLOBAL VDD VSS
+
+.SUBCKT MGMT_PROTECT_HV(MPRJ2_VDD_LOGIC1 MPRJ2_VDD_LOGIC1 MPRJ_VDD_LOGIC1 VCCD VDDA1 VDDA2 VSSA2 VSSA1 VSSD 
+
+
+.ENDS MGMT_PROTECT_HV(MPRJ2_VDD_LOGIC1,

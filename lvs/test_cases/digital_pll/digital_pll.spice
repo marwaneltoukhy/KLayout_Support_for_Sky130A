@@ -1052,7 +1052,7 @@ X\ringosc.ibufp00  \ringosc.dstage[0].id.in\ VGND VGND VPWR VPWR \ringosc.c[0]\ 
 X\ringosc.ibufp01  \ringosc.c[0]\ VGND VGND VPWR VPWR \pll_control.clock\ sky130_fd_sc_hd__clkinv_8
 X\ringosc.ibufp10  \ringosc.dstage[5].id.out\ VGND VGND VPWR VPWR \ringosc.c[1]\ sky130_fd_sc_hd__clkinv_2
 X\ringosc.ibufp11  \ringosc.c[1]\ VGND VGND VPWR VPWR clockp[1] sky130_fd_sc_hd__clkinv_8
-X\ringosc.iss.const1  VGND VGND VPWR VPWR \ringosc.iss.one\ sky130_fd_sc_hd__conb_1
+X\ringosc.iss.const1  VPWR VGND VPWR VGND \ringosc.iss.one\ sky130_fd_sc_hd__conb_1
 X\ringosc.iss.ctrlen0  \ringosc.iss.reset\ \ringosc.iss.trim[0]\ VGND VGND VPWR VPWR 
 + \ringosc.iss.ctrl0\
 + sky130_fd_sc_hd__or2_2

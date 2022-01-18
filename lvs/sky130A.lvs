@@ -291,5 +291,3 @@ if ! compare
   else
     puts "\033[1;32m Netlists match :) \033[0m"
   end
-
-l2n_data.write("lol.txt")

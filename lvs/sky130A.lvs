@@ -126,15 +126,15 @@ NCM = input(92, 44)
 
 
 # Bulk layer for terminal provisioning
-SUB = input(236, 0)
+SUB = input(81, 4)
 
 POLY_SHORT_RES = POLY & POLY_SHORT
-POLY = POLY - POLY_SHORT
+POLY_NOT_POLY_SHORT = POLY - POLY_SHORT
 
 # Computed layers
 PDIFF = DIFF & NWELL & PSDM
 NTAP = TAP & NWELL & NSDM
-PGATE = PDIFF & POLY
+PGATE = PDIFF & POLY_NOT_POLY_SHORT
 PSD = PDIFF - PGATE
 STD_PGATE = PGATE - HVTP - NCM - HVI
 HVT_PGATE = PGATE & HVTP - NCM - HVI
@@ -142,7 +142,7 @@ HV5_PGATE = PGATE - HVTP - NCM & HVI
   
 NDIFF = DIFF - NWELL & NSDM
 PTAP = TAP - NWELL & PSDM
-NGATE = NDIFF & POLY
+NGATE = NDIFF & POLY_NOT_POLY_SHORT
 NSD = NDIFF - NGATE
 STD_NGATE = NGATE - NCM - LVTN - HVI
 LVT_NGATE = NGATE - NCM & LVTN - HVI
@@ -153,22 +153,22 @@ HV5NA_NGATE = NGATE - NCM & LVTN & HVI
 device_scaling(1000000)
 
 # PMOS transistor device extraction
-extract_devices(mos4("sky130_fd_pr__pfet_01v8"), { "SD" => PSD, "G" => STD_PGATE, "tS" => PSD, "tD" => PSD, "tG" => POLY, "W" => NWELL })
-extract_devices(mos4("sky130_fd_pr__pfet_01v8_hvt"), { "SD" => PSD, "G" => HVT_PGATE, "tS" => PSD, "tD" => PSD, "tG" => POLY, "W" => NWELL })
-extract_devices(mos4("sky130_fd_pr__pfet_g5v0d10v5"), { "SD" => PSD, "G" => HV5_PGATE, "tS" => PSD, "tD" => PSD, "tG" => POLY, "W" => NWELL })
+extract_devices(mos4("sky130_fd_pr__pfet_01v8"), { "SD" => PSD, "G" => STD_PGATE, "tS" => PSD, "tD" => PSD, "tG" => POLY_NOT_POLY_SHORT, "W" => NWELL })
+extract_devices(mos4("sky130_fd_pr__pfet_01v8_hvt"), { "SD" => PSD, "G" => HVT_PGATE, "tS" => PSD, "tD" => PSD, "tG" => POLY_NOT_POLY_SHORT, "W" => NWELL })
+extract_devices(mos4("sky130_fd_pr__pfet_g5v0d10v5"), { "SD" => PSD, "G" => HV5_PGATE, "tS" => PSD, "tD" => PSD, "tG" => POLY_NOT_POLY_SHORT, "W" => NWELL })
 
 # NMOS transistor device extraction
-extract_devices(mos4("sky130_fd_pr__nfet_01v8"), { "SD" => NSD, "G" => STD_NGATE, "tS" => NSD, "tD" => NSD, "tG" => POLY, "W" => SUB })
-extract_devices(mos4("sky130_fd_pr__nfet_01v8_lvt"), { "SD" => NSD, "G" => LVT_NGATE, "tS" => NSD, "tD" => NSD, "tG" => POLY, "W" => SUB })
-extract_devices(mos4("sky130_fd_pr__nfet_g5v0d10v5"), { "SD" => NSD, "G" => HV5_NGATE, "tS" => NSD, "tD" => NSD, "tG" => POLY, "W" => SUB })
-extract_devices(mos4("sky130_fd_pr__nfet_01v8_nvt"), { "SD" => NSD, "G" => HV5NA_NGATE, "tS" => NSD, "tD" => NSD, "tG" => POLY, "W" => SUB })
+extract_devices(mos4("sky130_fd_pr__nfet_01v8"), { "SD" => NSD, "G" => STD_NGATE, "tS" => NSD, "tD" => NSD, "tG" => POLY_NOT_POLY_SHORT, "W" => SUB })
+extract_devices(mos4("sky130_fd_pr__nfet_01v8_lvt"), { "SD" => NSD, "G" => LVT_NGATE, "tS" => NSD, "tD" => NSD, "tG" => POLY_NOT_POLY_SHORT, "W" => SUB })
+extract_devices(mos4("sky130_fd_pr__nfet_g5v0d10v5"), { "SD" => NSD, "G" => HV5_NGATE, "tS" => NSD, "tD" => NSD, "tG" => POLY_NOT_POLY_SHORT, "W" => SUB })
+extract_devices(mos4("sky130_fd_pr__nfet_01v8_nvt"), { "SD" => NSD, "G" => HV5NA_NGATE, "tS" => NSD, "tD" => NSD, "tG" => POLY_NOT_POLY_SHORT, "W" => SUB })
 
 # Resistor device extraction 
 sheet_rho=0
-extract_devices(resistor("sky130_fd_pr__res_generic_po", sheet_rho), { "R" => POLY_SHORT_RES, "C" => POLY})
+extract_devices(resistor("sky130_fd_pr__res_generic_po", sheet_rho), { "R" => POLY_SHORT_RES, "C" => POLY_NOT_POLY_SHORT})
 
 # Diode device extraction
-MOS_DIFF = DIFF.overlapping(POLY)
+MOS_DIFF = DIFF.overlapping(POLY_NOT_POLY_SHORT)
 DIODE_DIFF = DIFF - MOS_DIFF
 extract_devices(diode("sky130_fd_pr__diode_pw2nd_05v5"), { "P" => DIODE_DIFF, "N" => NSD, "tA" => LI, "tC" => SUB })
 
@@ -180,7 +180,7 @@ connect(LICON,   PTAP)
 connect(LICON,   NTAP)
 connect(PSD,    LICON)
 connect(NSD,    LICON)
-connect(POLY,   LICON)
+connect(POLY_NOT_POLY_SHORT,   LICON)
 connect(LICON,   LI)
 connect(LI, MCON)
 connect(MCON,   MET1)
@@ -198,9 +198,9 @@ connect(SUB, PWELL_PIN)
 connect(PWELL_PIN, PWELL_LABEL)
 connect(NWELL, NWELL_PIN)
 connect(NWELL_PIN, NWELL_LABEL)
-connect(POLY, POLY_PIN)
+connect(POLY_NOT_POLY_SHORT, POLY_PIN)
 connect(POLY_PIN, POLY_LABEL)
-#connect(POLY, POLY_SHORT_T)
+#connect(POLY_NOT_POLY_SHORT, POLY_SHORT_T)
 connect(LI, LI_PIN)
 connect(LI_PIN, LI_LABEL)
 connect(MET1, MET1_PIN)
@@ -216,10 +216,6 @@ connect(MET5_PIN, MET5_LABEL)
 
 # Global
 connect_global(SUB, "VNB")
-#connect_global(SUB, "VGND")
-connect_explicit($top_cell, ["VGND", "VNB"])
-#connect_global(SUB, "VGND")
-# same_device_classes("sky130_fd_sc_hd__fill_2", "nill")
 
 # Flatten cells which are present in one netlist only
 align
@@ -279,8 +275,6 @@ equivalent_pins("*XOR2_1", "A", "B")
 equivalent_pins("*XOR2_2", "A", "B")
 equivalent_pins("*XNOR2_1", "A", "B")
 equivalent_pins("*XNOR2_2", "A", "B")
-equivalent_pins("sky*", "VGND", "VNB")
-equivalent_pins("SKY*", "VGND", "VNB")
 
 if $black_box == 1 || $black_box == 'true'
     blank_circuit("sky*")
@@ -290,7 +284,7 @@ end
 #compare 
 if ! compare 
     #raise "ERROR : Netlists don't match"
-    puts "ERROR : Netlists don't match"
+    puts "\033[91m Netlists don't match \033[0m"
   else
-    puts "INFO : Netlists match :D"
+    puts "\033[1;32m Netlists match :) \033[0m"
   end

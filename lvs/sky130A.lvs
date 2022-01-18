@@ -164,7 +164,7 @@ extract_devices(mos4("sky130_fd_pr__nfet_g5v0d10v5"), { "SD" => NSD, "G" => HV5_
 extract_devices(mos4("sky130_fd_pr__nfet_01v8_nvt"), { "SD" => NSD, "G" => HV5NA_NGATE, "tS" => NSD, "tD" => NSD, "tG" => POLY_NOT_POLY_SHORT, "W" => SUB })
 
 # Resistor device extraction 
-sheet_rho=0
+sheet_rho=70
 extract_devices(resistor("sky130_fd_pr__res_generic_po", sheet_rho), { "R" => POLY_SHORT_RES, "C" => POLY_NOT_POLY_SHORT})
 
 # Diode device extraction
@@ -233,6 +233,9 @@ tolerance("nfet_01v8", "W", :absolute => 1.nm, :relative => 0.001)
 tolerance("nfet_01v8", "L", :absolute => 1.nm, :relative => 0.001)
 tolerance("nfet_01v8_lvt", "W", :absolute => 1.nm, :relative => 0.001)
 tolerance("nfet_01v8_lvt", "L", :absolute => 1.nm, :relative => 0.001)
+disable_parameter("sky130_fd_pr__res_generic_po", "R")
+tolerance("sky130_fd_pr__res_generic_po", "W", :absolute => 1.nm, :relative => 0.001)
+tolerance("sky130_fd_pr__res_generic_po", "L", :absolute => 1.nm, :relative => 0.001)
 
 # NangateOpenCellLibrary Digital gates input equivalence :
 equivalent_pins("*AND2_1", "A", "B")
@@ -288,3 +291,5 @@ if ! compare
   else
     puts "\033[1;32m Netlists match :) \033[0m"
   end
+
+l2n_data.write("lol.txt")

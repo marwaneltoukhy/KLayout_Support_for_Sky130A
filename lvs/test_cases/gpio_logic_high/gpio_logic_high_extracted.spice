@@ -1,0 +1,99 @@
+* Extracted by KLayout on : 19/01/2022 09:20
+
+.SUBCKT gpio_logic_high vccd1 gpio_logic1 vssd1
+X$1 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_4
+X$2 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_1
+X$3 vccd1 vccd1 vssd1 vssd1 sky130_fd_sc_hd__decap_12
+X$4 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$5 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$6 vccd1 vssd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+X$7 vccd1 vccd1 vssd1 vssd1 sky130_fd_sc_hd__decap_6
+X$8 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_2
+X$9 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_1
+X$10 vccd1 vssd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+X$11 vccd1 vssd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+X$12 vccd1 vccd1 vssd1 vssd1 sky130_fd_sc_hd__decap_6
+X$13 vccd1 vccd1 vssd1 vssd1 sky130_fd_sc_hd__decap_6
+X$14 vccd1 vssd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+X$15 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$16 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$17 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_1
+X$18 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_1
+X$19 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_4
+X$20 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_1
+X$21 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$22 vccd1 vssd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+X$23 vccd1 vccd1 vssd1 vssd1 sky130_fd_sc_hd__decap_6
+X$24 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_1
+X$25 vccd1 vssd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+X$26 vccd1 vccd1 vssd1 vssd1 sky130_fd_sc_hd__decap_6
+X$27 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_1
+X$28 vccd1 vssd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+X$29 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$30 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_4
+X$31 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_1
+X$32 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$33 vccd1 vccd1 vssd1 vssd1 sky130_fd_sc_hd__decap_12
+X$34 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$35 vccd1 vssd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+X$36 vccd1 vccd1 vssd1 vssd1 sky130_fd_sc_hd__decap_12
+X$37 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_4
+X$38 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_2
+X$39 vccd1 vccd1 vssd1 vssd1 sky130_fd_sc_hd__decap_6
+X$40 vccd1 vssd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+X$41 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$42 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_1
+X$43 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$44 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_4
+X$45 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_1
+X$46 vccd1 vccd1 vssd1 vssd1 sky130_fd_sc_hd__decap_12
+X$47 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$48 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$49 vccd1 vssd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+X$50 vccd1 vccd1 vssd1 vssd1 sky130_fd_sc_hd__decap_12
+X$51 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_4
+X$52 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_2
+X$53 vccd1 vccd1 vssd1 vssd1 sky130_fd_sc_hd__decap_6
+X$54 vccd1 vssd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+X$55 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_1
+X$56 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$57 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$58 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_4
+X$59 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_1
+X$60 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$61 vccd1 vccd1 vssd1 vssd1 sky130_fd_sc_hd__decap_12
+X$62 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$63 vccd1 vssd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+X$64 vccd1 vccd1 vssd1 vssd1 sky130_fd_sc_hd__decap_12
+X$65 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_4
+X$66 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__fill_2
+X$67 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_4
+X$68 vccd1 vssd1 sky130_fd_sc_hd__tapvpwrvgnd_1
+X$69 vccd1 vccd1 vssd1 gpio_logic1 vssd1 sky130_fd_sc_hd__conb_1
+X$70 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+X$71 vccd1 vssd1 vccd1 vssd1 sky130_fd_sc_hd__decap_3
+.ENDS gpio_logic_high
+
+.SUBCKT sky130_fd_sc_hd__conb_1 nc_1 nc_2 nc_3 nc_4 nc_5
+.ENDS sky130_fd_sc_hd__conb_1
+
+.SUBCKT sky130_fd_sc_hd__fill_2 nc_1 nc_2 nc_3 nc_4
+.ENDS sky130_fd_sc_hd__fill_2
+
+.SUBCKT sky130_fd_sc_hd__tapvpwrvgnd_1 nc_1 nc_2
+.ENDS sky130_fd_sc_hd__tapvpwrvgnd_1
+
+.SUBCKT sky130_fd_sc_hd__decap_3 nc_1 nc_2 nc_3 nc_4
+.ENDS sky130_fd_sc_hd__decap_3
+
+.SUBCKT sky130_fd_sc_hd__decap_12 nc_1 nc_2 nc_3 nc_4
+.ENDS sky130_fd_sc_hd__decap_12
+
+.SUBCKT sky130_fd_sc_hd__decap_6 nc_1 nc_2 nc_3 nc_4
+.ENDS sky130_fd_sc_hd__decap_6
+
+.SUBCKT sky130_fd_sc_hd__fill_1 nc_1 nc_2 nc_3 nc_4
+.ENDS sky130_fd_sc_hd__fill_1
+
+.SUBCKT sky130_fd_sc_hd__decap_4 nc_1 nc_2 nc_3 nc_4
+.ENDS sky130_fd_sc_hd__decap_4

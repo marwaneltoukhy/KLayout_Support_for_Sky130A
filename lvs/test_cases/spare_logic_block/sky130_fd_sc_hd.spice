@@ -4867,9 +4867,9 @@ M7 Y A VPWR VPB sky130_fd_pr__pfet_01v8_hvt w=1e+06u l=250000u
 * SPDX-License-Identifier: Apache-2.0
 
 
-.subckt sky130_fd_sc_hd__conb_1 VPB VNB VPWR VGND HI
-R0 VGND LO 0 sky130_fd_pr__res_generic_po
-R1 HI VPWR 0 sky130_fd_pr__res_generic_po
+.subckt sky130_fd_sc_hd__conb_1 VGND VNB VPB VPWR HI LO
+R0 VGND LO 0 sky130_fd_pr__res_generic_po w=480000u l=45000u
+R1 HI VPWR 0 sky130_fd_pr__res_generic_po w=480000u l=45000u
 .ends
 
 
@@ -10030,7 +10030,7 @@ Xsky130_fd_sc_hd__nor2_2_0 sky130_fd_sc_hd__nor2_2_0/A sky130_fd_sc_hd__inv_2_0/
 + sky130_fd_sc_hd__nor2_2_0/A VPB VNB VGND VPWR sky130_fd_sc_hd__nor2_2
 Xsky130_fd_sc_hd__nor2_2_1 sky130_fd_sc_hd__nor2_2_1/B sky130_fd_sc_hd__inv_2_1/A
 + sky130_fd_sc_hd__nor2_2_1/B VPB VNB VGND VPWR sky130_fd_sc_hd__nor2_2
-Xsky130_fd_sc_hd__conb_1_0 sky130_fd_sc_hd__conb_1_0/VPB VNB VPWR VGND HI sky130_fd_sc_hd__conb_1
+Xsky130_fd_sc_hd__conb_1_0 LO sky130_fd_sc_hd__conb_1_0/HI VPB VNB VGND VPWR sky130_fd_sc_hd__conb_1
 .ends
 
 

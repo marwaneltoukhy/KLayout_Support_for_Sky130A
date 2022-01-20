@@ -8,7 +8,10 @@ for line in fin:
 	#read replace the string and write to output file
     
     if (line.startswith('X')):
-        line = line.replace('X', 'M', 1)
+        if (not line.startswith('Xsky130_')):
+            if (not line.startswith('Xgpio')):
+                if (not line.startswith('XI')):
+                    line = line.replace('X', 'M', 1)
     fout.write(line)
 #close input and output files
 fin.close()
